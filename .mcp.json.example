@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "apple-mail": {
+      "command": "node",
+      "args": ["/FULL/PATH/TO/apple-mail-mcp/build/index.js"],
+      "env": {
+        "MAIL_BRIDGE_BIN": "/FULL/PATH/TO/apple-mail-mcp/swift/.build/release/mail-bridge"
+      }
+    }
+  }
+}

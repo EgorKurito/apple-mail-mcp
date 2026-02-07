@@ -1,0 +1,18 @@
+# Swift
+swift/.build/
+swift/.swiftpm/
+
+# TypeScript
+build/
+node_modules/
+
+# macOS
+.DS_Store
+
+# Environment
+.env*
+.mcp.json
+
+# IDE
+.vscode/
+.idea/
