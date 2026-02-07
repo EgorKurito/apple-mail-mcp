@@ -1,13 +1,53 @@
 {
-  "name": "apple-mail-mcp",
+  "name": "@egorkurito/apple-mail-mcp",
   "version": "1.0.0",
   "description": "MCP server for Apple Mail via NSAppleScript",
   "type": "module",
   "main": "build/index.js",
+  "bin": {
+    "apple-mail-mcp": "build/index.js"
+  },
+  "files": [
+    "build/",
+    "swift/Sources/",
+    "swift/Package.swift",
+    "swift/Package.resolved",
+    "swift/mail-bridge.entitlements",
+    "scripts/",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "tsc",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "prepare": "npm run build",
+    "postinstall": "node scripts/postinstall.js"
   },
+  "keywords": [
+    "mcp",
+    "apple-mail",
+    "macos",
+    "email",
+    "model-context-protocol",
+    "claude",
+    "applescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egorkurito/apple-mail-mcp.git"
+  },
+  "homepage": "https://github.com/egorkurito/apple-mail-mcp#readme",
+  "bugs": {
+    "url": "https://github.com/egorkurito/apple-mail-mcp/issues"
+  },
+  "author": "egorkurito",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin"
+  ],
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "execa": "^9.5.2",

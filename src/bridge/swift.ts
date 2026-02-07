@@ -1,4 +1,7 @@
 import { execa } from "execa";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+import { existsSync } from "node:fs";
 
 // Mirror of Swift models
 
@@ -82,18 +85,28 @@ interface BridgeOutput<T> {
   error?: string;
 }
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+function findBinary(): string {
+  const envPath = process.env.MAIL_BRIDGE_BIN;
+  if (envPath) return envPath;
+
+  // Auto-detect: relative to build/bridge/swift.js → ../../swift/.build/release/mail-bridge
+  const autoPath = join(__dirname, "..", "..", "swift", ".build", "release", "mail-bridge");
+  if (existsSync(autoPath)) return autoPath;
+
+  throw new Error(
+    "mail-bridge binary not found. Either set MAIL_BRIDGE_BIN environment variable " +
+      "or run the postinstall script to build it: node scripts/postinstall.js"
+  );
+}
+
 export class SwiftBridge {
   private binPath: string;
 
   constructor() {
-    const envPath = process.env.MAIL_BRIDGE_BIN;
-    if (!envPath) {
-      throw new Error(
-        "MAIL_BRIDGE_BIN environment variable is not set. " +
-          "Set it to the path of the mail-bridge binary."
-      );
-    }
-    this.binPath = envPath;
+    this.binPath = findBinary();
   }
 
   private async exec<T>(args: string[]): Promise<T> {
